@@ -3,10 +3,10 @@ FROM ubuntu:16.04
 COPY build/java_policy /etc
 
 RUN buildDeps='software-properties-common git libtool cmake python-dev python3-pip python-pip libseccomp-dev' && \
-  dpkg -i packages-microsoft-prod.deb && \
   apt-get update && \ 
   apt-get install -y curl wget python python3.5 python-pkg-resources python3-pkg-resources gcc g++ $buildDeps && \
   wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+  dpkg -i packages-microsoft-prod.deb && \
   apt-get update && \
   add-apt-repository ppa:openjdk-r/ppa && apt-get update && apt-get install -y openjdk-8-jdk && \
   apt-get install apt-transport-https && \
