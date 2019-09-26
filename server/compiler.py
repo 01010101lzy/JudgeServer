@@ -44,10 +44,16 @@ class Compiler(object):
                 with open(compiler_out, encoding="utf-8") as f:
                     error = f.read().strip()
                     os.remove(compiler_out)
+                    compile_conf = json.dumps(compile_config)
+                    environment = json.dumps(env)
+
                     if error:
-                        raise CompileError(error)
+                        raise CompileError(
+                            "Compiler Error.\nConfig: %s\nEnv: %s\nstdout:\n%s"
+                            % (compile_conf, environment, error))
             raise CompileError(
-                "Compiler runtime error, info: %s" % json.dumps(result))
+                "Compiler runtime error\nConfig: %s\nEnv: %s\ninfo: %s" %
+                (compile_conf, environment, json.dumps(result)))
         else:
             os.remove(compiler_out)
             return exe_path
