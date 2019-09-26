@@ -2,6 +2,8 @@ FROM ubuntu:16.04
 
 COPY build/java_policy /etc
 
+ENV CARGO_HOME=/usr/bin/cargo
+ENV RUSTUP_HOME=/usr/bin/rustup
 RUN buildDeps='software-properties-common git libtool cmake python-dev python3-pip python-pip libseccomp-dev' && \
   apt-get update && \ 
   apt-get install -y curl wget python python3.5 python-pkg-resources python3-pkg-resources gcc g++ $buildDeps && \
@@ -16,7 +18,7 @@ RUN buildDeps='software-properties-common git libtool cmake python-dev python3-p
   cd /tmp && git clone -b newnew  --depth 1 https://github.com/QingdaoU/Judger && cd Judger && \
   mkdir build && cd build && cmake .. && make && make install && cd ../bindings/Python && python3 setup.py install && \
   apt-get purge -y --auto-remove $buildDeps && \
-  dotnet tool install -g dotnet-script && \
+  dotnet tool install --tool-path /usr/bin/dotnet-script dotnet-script && \
   apt-get clean && rm -rf /var/lib/apt/lists/* && \
   mkdir -p /code && \
   useradd -u 12001 compiler && useradd -u 12002 code && useradd -u 12003 spj && usermod -a -G code spj
