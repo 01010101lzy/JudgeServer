@@ -16,8 +16,8 @@ class Compiler(object):
         _command = command.split(" ")
 
         env = ["PATH=" + os.getenv("PATH")]
-        if not compile_config.get("compile_env") is None:
-            env = env.extend(compile_config.get("compile_env"))
+        if not compile_config.get("compile_env") == None:
+            env.extend(compile_config.get("compile_env"))
 
         os.chdir(output_dir)
         result = _judger.run(
