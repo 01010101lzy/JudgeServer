@@ -3,11 +3,12 @@ FROM ubuntu:16.04
 COPY build/java_policy /etc
 
 RUN buildDeps='software-properties-common git libtool cmake python-dev python3-pip python-pip libseccomp-dev' && \
-  wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
   sudo dpkg -i packages-microsoft-prod.deb && \
-  apt-get update && \ 
-  apt-get install -y curl python python3.5 python-pkg-resources python3-pkg-resources gcc g++ $buildDeps && \
-  add-apt-repository ppa:openjdk-r/ppa && apt-get update && apt-get install -y openjdk-8-jdk && \
+  sudo apt-get update && \ 
+  sudo apt-get install -y curl wget python python3.5 python-pkg-resources python3-pkg-resources gcc g++ $buildDeps && \
+  wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+  sudo apt-get update && \
+  sudo add-apt-repository ppa:openjdk-r/ppa && apt-get update && apt-get install -y openjdk-8-jdk && \
   sudo apt-get install apt-transport-https && \
   sudo apt-get install dotnet-sdk-3.0 && \
   curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y && \
